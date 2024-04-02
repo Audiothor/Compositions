@@ -8,7 +8,7 @@ set -e
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-if [ $1 == 'gunicorn' ]
+if [ "$1" = "gunicorn" ]
 then
  exec gunicorn compositions.wsgi:application -b 0.0.0.0:8000
 else
