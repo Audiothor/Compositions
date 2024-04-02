@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ARTSEN{% endblock %}
+{% block content %}
+        <h1>ARTSEN - Gestion des compositions</h1>
+        <p>
+            <em>Sélectionner une action ci-dessous</em>
+        </p>
+        <p>
+            <a href="{% url 'welcome' %}">Liste des compositions</a> <br />
+            <a href="{% url 'instruments' %}">Liste des instruments</a> <br />
+        </p>
+        <img src="{% static "website/musique.jpg" %}" width="100px"/>
+{% endblock %}

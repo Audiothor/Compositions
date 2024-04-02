@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}ARTSEN{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+     <p>Erreur dans la saisie du user ou du mot de passe.</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+
+        <input type="submit" value="login">
+    </form>
+{% endblock %}

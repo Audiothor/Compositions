@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}ARTSEN{% endblock %}
+{% block content %}
+        <h1>ARTSEN - Liste des compositions</h1>
+        <p>
+            Liste complète des compositions écrites.
+        </p>
+    <ul>
+        {% for morceau in morceaux %}
+            <li>
+                <a href="{% url 'detail' morceau.id %}">
+                    {{morceau.nom}}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">Home</a>
+{% endblock %}

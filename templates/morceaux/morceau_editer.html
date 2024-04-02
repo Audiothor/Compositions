@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}ARTSEN{% endblock %}
+
+{% block content %}
+    <h1>Edition du morceau : {{ morceau.nom }}</h1>
+    <form method="POST">
+        <table>
+            {{ form }}
+        </table>
+        {% csrf_token %}
+        <button type="submit">Mettre à jour</button>
+    </form>
+    <a href="{% url 'index' %}">Annuler</a>
+{% endblock %}

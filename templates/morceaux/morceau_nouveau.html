@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}ARTSEN{% endblock %}
+
+{% block content %}
+    <h1>Saisie d'un nouveau morceau</h1>
+    <form method="POST">
+        <table>
+            {{ form }}
+        </table>
+        {% csrf_token %}
+        <button type="submit">Enregistrer</button>
+    </form>
+    <a href="{% url 'index' %}">Home</a>
+{% endblock %}

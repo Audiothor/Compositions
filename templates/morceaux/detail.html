@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+{% block content %}
+        <h1>Morceau : {{morceau.nom}}</h1>
+        <p>Durée : {{morceau.duree}}</p>
+        <p>Début écriture : {{morceau.date_debut}}</p>
+        <p>Fin écriture : {{morceau.date_fin}}</p>
+
+        <a href="{% url 'morceau_editer' morceau.id %}">Editer ce morceau</a><br>
+        <a href="{% url 'morceau_supprimer' morceau.id %}">Supprimer ce morceau</a><br>
+    
+        <a href="{% url 'index' %}">Home</a>
+{% endblock %}
