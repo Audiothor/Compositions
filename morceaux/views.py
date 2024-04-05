@@ -12,6 +12,10 @@ def instruments_list(request):
     instruments=Instrument.objects.all()
     return render(request, template_name="morceaux/instruments_list.html",context={"instruments":instruments})
 
+def morceaux_list(request):
+    morceaux=Morceau.objects.all()
+    return render(request, template_name="morceaux/morceaux_list.html",context={"morceaux": morceaux})
+
 MorceauForm = modelform_factory(Morceau,exclude=[])
 
 @login_required

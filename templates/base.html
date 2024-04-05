@@ -5,9 +5,20 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
         <link rel="stylesheet" href="{% static 'website/style.css' %}">
+        {% if request.get_full_path == "/biography" %}
+            <link rel="stylesheet" href="{% static 'website/biography.css' %}">
+        {% endif %}
+        {% if request.get_full_path == "/morceaux/" %}
+            <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
+            <link rel="stylesheet" href="{% static 'morceaux/morceaux.css' %}">
+        {% endif %}
     </head>
     <body>
+        {{request.get_full_path}}
         {% if user.is_authenticated %}
             Logged in as : {{ user.get_username }}
             <form method="POST" action="{% url 'logout' %}" style="float:right">
@@ -18,7 +29,39 @@
             <a href="{% url 'login' %}">Login</a>
         {% endif %}
         
-        {% block content %}
-        {% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">ARTSEN</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">News</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/biography">Biography</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/morceaux">Music</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Tools</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+            {% block content %}
+            {% endblock %}
+            <nav class="navbar fixed-bottom navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand fs-6">&#169 ARTSEN - 2024</a>
+                </div>
+            </nav>
     </body>
 </html>

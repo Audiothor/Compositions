@@ -18,6 +18,9 @@ def welcome(request):
 def index(request):
     return render(request, template_name="website/index.html")
 
+def biography(request):
+    return render(request, template_name="website/biography.html")
+
 def about(request):
     nb_compositions=Morceau.objects.count()
     return render(request, template_name="website/welcome.html",context={"nb_compositions":nb_compositions})

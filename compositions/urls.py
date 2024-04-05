@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from website.views import index,welcome,about
+from website.views import index,welcome,about,biography
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +24,8 @@ urlpatterns = [
     path('about.html',about),
     # URLS de l'index
     path('',index,name="index"),
+    # URLS de la biographie
+    path('biography',biography,name="biography"),
     # URLS de morceaux
     path('morceaux/',include('morceaux.urls')),
     # URL de login
