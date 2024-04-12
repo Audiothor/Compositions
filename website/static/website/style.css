@@ -3,3 +3,35 @@ body {
     color: cornflowerblue;
     background-color: black;
 }
+
+a:visited {
+    color: #FFFFFF; /* Couleur du texte en blanc pour les liens visités */
+}
+
+.card {
+    width: 80%;
+    padding: 1%;
+    background-color: #f1f1f1;
+    border-radius: 10px 10px 10px 10px;
+    display: table;
+    margin: 0 auto;
+}
+
+.card_action {
+    width: 20%;
+    padding: 1%;
+    /* background-color: #f1f1f1; */
+    /* border-radius: 10px 10px 10px 10px; */
+    display: table;
+    margin: 0 auto;
+    margin-right: 10%;
+    text-align: center;
+}
+
+.card_action1 {
+    background-color: #f1f1f1;
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 20px;
+    margin-top: 5px;
+    text-align: right;
+}

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404,redirect
 from django.forms import modelform_factory
 
-from morceaux.models import Morceau,Instrument
+from morceaux.models import Morceau,Instrument,Style
 
 def detail(request, id):
     morceau=get_object_or_404(Morceau,pk=id)
@@ -11,6 +11,10 @@ def detail(request, id):
 def instruments_list(request):
     instruments=Instrument.objects.all()
     return render(request, template_name="morceaux/instruments_list.html",context={"instruments":instruments})
+
+def styles_list(request):
+    styles=Style.objects.all()
+    return render(request, template_name="morceaux/styles_list.html",context={"styles":styles})
 
 def morceaux_list(request):
     morceaux=Morceau.objects.all()

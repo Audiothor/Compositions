@@ -1,15 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}ARTSEN{% endblock %}
 {% block content %}
-        <h1>ARTSEN - Liste des instruments</h1>
-        <ul>
-            {% for instrument in instruments %}
-                <li>
-                        {{instrument.nom}}
-                </li>
-            {% endfor %}
-        </ul>    
+        <h1>List of Instruments & Softwares</h1>
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                <th></th>
+                <th>Instrument or Software</th>
+                <th>Directory</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for instrument in instruments %}
+                <tr class="table-light">
+                <td></td>
+                <td>{{instrument.nom}}</td>
+                <td>{{instrument.repertoire}}</td>
+                </tr>
+                {% endfor %}      
+            </tbody>
+        </table>
+   
         <a href="{% url 'index' %}">Home</a>
     </body>
 {% endblock %}

@@ -16,7 +16,12 @@ def welcome(request):
 #    return HttpResponse("ARTSEN - Gestion des compositions")
 
 def index(request):
-    return render(request, template_name="website/index.html")
+    return render(request, template_name="website/index.html",context = {
+        'ALERT_CLASS': 'alert-success',
+        'ALERT_TYPE': 'SUCCESS',
+        'ALERT_MESSAGE': 'Hello, World!',
+        # Add more variables as needed
+    })
 
 def biography(request):
     return render(request, template_name="website/biography.html")
