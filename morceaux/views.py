@@ -19,9 +19,20 @@ def styles_list(request):
 def morceaux_list(request):
     morceaux=Morceau.objects.all()
     return render(request, template_name="morceaux/morceaux_list.html",context={"morceaux": morceaux})
-
+    
 MorceauForm = modelform_factory(Morceau,exclude=[])
 
+def search_morceau(request):
+    # Check if the request is a post request.
+    if request.method == 'POST':
+        # Retrieve the search query entered by the user
+        search_query = request.POST['search_query']
+        # Filter your model by the search query
+        morceaux = Morceau.objects.filter(nom__contains=search_query)
+        return render(request, 'morceaux/morceau_search.html', {'query':search_query, 'morceaux': morceaux})
+    else:
+        return render(request, 'morceaux/morceaux_list.html',{})
+    
 @login_required
 def morceau_nouveau(request):
     if request.method == "POST":

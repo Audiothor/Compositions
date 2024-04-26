@@ -28,9 +28,10 @@
         </div>
         {% endif %}
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-md navbar-fixed-top navbar-dark bg-custom">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/">ARTSEN</a>
+              <a class="navbar-brand" href="/">Compositions</a>
+              <a class="navbar-brand fs-6" href="/">v0.01</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -43,7 +44,7 @@
                     <a class="nav-link" href="/biography">Biography</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/morceaux">Music</a>
+                    <a class="nav-link" href="/morceaux">Musics</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Settings</a>
@@ -55,20 +56,21 @@
                                     <form method="POST" action="{% url 'logout' %}">
                                         {% csrf_token %}
                                         <!-- <button type="submit">Logout</button>-->
+                                        <li><a class="dropdown-item text-dark" href="/admin">Admin</a></li>
                                         <li><a class="dropdown-item text-dark" href="{% url 'logout' %}">Logout</a></li>               
                                     </form>
                                 {% else %}
                                     <a class="dropdown-item text-dark text-left" href="{% url 'login' %}">Login</a>
                                 {% endif %}
                       
-                      <li><a class="dropdown-item text-dark" href="#">Import</a></li>
+                      <li><a class="dropdown-item text-dark" href="/settings/import.html">Import</a></li>
                       <li><a class="dropdown-item text-dark" href="/morceaux/styles">Styles</a></li>
                       <li><a class="dropdown-item text-dark" href="/morceaux/instruments">Instruments</a></li>
                       <li><a class="dropdown-item text-dark" href="#">Config</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="https://github.com/Audiothor/Compositions" target="_blank">Contact</a>
                   </li>
                 </ul>
               </div>

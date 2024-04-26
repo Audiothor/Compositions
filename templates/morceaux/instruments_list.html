@@ -2,26 +2,31 @@
 
 {% block title %}ARTSEN{% endblock %}
 {% block content %}
-        <h1>List of Instruments & Softwares</h1>
-        <table class="table">
-            <thead class="table-success">
-                <tr>
+    <br>
+    <h1 class="text-center">Instruments & DAWs</h1>
+    </br>
+    <table class="table">
+        <thead class="table-success">
+            <tr>
+                <th width="5%"></th>
+                <th width="40%">Instrument or Software</th>
+                <th width="45%">Directory</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instrument in instruments %}
+            <tr class="table-light">
                 <th></th>
-                <th>Instrument or Software</th>
-                <th>Directory</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for instrument in instruments %}
-                <tr class="table-light">
-                <td></td>
                 <td>{{instrument.nom}}</td>
-                <td>{{instrument.repertoire}}</td>
-                </tr>
-                {% endfor %}      
-            </tbody>
-        </table>
-   
-        <a href="{% url 'index' %}">Home</a>
-    </body>
+                <td style="text-align: left;">{{instrument.repertoire}}</td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+
+    <div class="card_back">
+        <a class="btn btn-info" href="{% url 'index' %}">Back</a>
+    </div>
+    </br>
+    </br>
 {% endblock %}

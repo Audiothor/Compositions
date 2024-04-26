@@ -1,24 +1,31 @@
 body {
     font-family: sans-serif;
-    color: cornflowerblue;
-    background-color: black;
+    color: rgb(255, 255, 255);
+    background-color: rgb(35, 34, 34);
 }
 
 a:visited {
     color: #FFFFFF; /* Couleur du texte en blanc pour les liens visités */
 }
 
+.titre {
+    font-family: sans-serif;
+    color: cornflowerblue;
+    background-color: rgb(35, 34, 34);
+}
+
 .card {
-    width: 80%;
+    width: 60%;
     padding: 1%;
-    background-color: #f1f1f1;
+    background-color: #373737;
     border-radius: 10px 10px 10px 10px;
+    border-color: #FFFFFF;
     display: table;
     margin: 0 auto;
 }
 
 .card_action {
-    width: 20%;
+    width: 30%;
     padding: 1%;
     /* background-color: #f1f1f1; */
     /* border-radius: 10px 10px 10px 10px; */
@@ -28,10 +35,17 @@ a:visited {
     text-align: center;
 }
 
-.card_action1 {
-    background-color: #f1f1f1;
-    border-radius: 3px 3px 3px 3px;
-    margin-left: 20px;
-    margin-top: 5px;
+.card_back {
+    width: 30%;
+    padding: 1%;
+    /* background-color: #f1f1f1; */
+    /* border-radius: 10px 10px 10px 10px; */
+    display: table;
+    margin: 0 auto;
+    margin-right: 10%;
     text-align: right;
+}
+
+.bg-custom {
+    background: linear-gradient(to bottom, #251b8f 0, #251b8f 100%);
 }

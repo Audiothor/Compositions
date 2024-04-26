@@ -29,5 +29,6 @@ urlpatterns = [
     # URLS de morceaux
     path('morceaux/',include('morceaux.urls')),
     # URL de login
-    path('auth/',include('django.contrib.auth.urls'))
+    path('auth/',include('django.contrib.auth.urls')),
+    path('settings/',include('settings.urls')),
 ]

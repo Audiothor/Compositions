@@ -32,6 +32,7 @@ class Morceau(models.Model):
     date_debut=models.DateField(null=True, blank=True)
     date_fin=models.DateField(null=True, blank=True)
     commentaire=models.TextField(null=True, blank=True)
+    locked=models.BooleanField(default=False)
     termine=models.BooleanField(default=False)
     mixe=models.BooleanField(default=False)
     documentation=models.BooleanField(default=False)

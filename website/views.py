@@ -16,12 +16,15 @@ def welcome(request):
 #    return HttpResponse("ARTSEN - Gestion des compositions")
 
 def index(request):
-    return render(request, template_name="website/index.html",context = {
-        'ALERT_CLASS': 'alert-success',
-        'ALERT_TYPE': 'SUCCESS',
-        'ALERT_MESSAGE': 'Hello, World!',
-        # Add more variables as needed
-    })
+    morceaux=Morceau.objects.all().order_by('-date_fin')[:5]
+    return render(request, template_name="website/index.html",context={"morceaux": morceaux})
+
+#    return render(request, template_name="website/index.html",context = {
+#        'ALERT_CLASS': 'alert-success',
+#        'ALERT_TYPE': 'SUCCESS',
+#        'ALERT_MESSAGE': 'Hello, World!',
+#        # Add more variables as needed
+#    })
 
 def biography(request):
     return render(request, template_name="website/biography.html")

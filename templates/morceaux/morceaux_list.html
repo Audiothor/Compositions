@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}ARTSEN{% endblock %}
 {% block content %}
-        <h1>ARTSEN - Liste des compositions</h1>
-        <p>
-            Liste complète des compositions écrites.
-        </p>
+    <br>
+    <h1 class="text-center">List of musical compositions</h1>
+    <p>
+        Liste complète des compositions écrites.
+    </p>
 
         <div class="container">
             <div class="row">
@@ -18,10 +20,16 @@
                                 </div>
                                 <div class="col-sm-9 col-xs-12 text-right">
                                     <div class="btn_group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                        <button class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
-                                        <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf"></i></button>
-                                        <button class="btn btn-default" title="Excel"><i class="fas fa-file-excel"></i></button>
+                                        <form role="search" method="POST" action="{% url 'blog-search-post' %}">
+                                        {% csrf_token %}
+                                            <input type="search" class="form-control me-2" placeholder="Search" name="search_query" required aria-label="Search">
+                                            <button class="btn btn-outline-success" type="submit">Search</button>
+
+                                        {% if user.is_authenticated %}
+                                        &nbsp;
+                                        <a href="morceau_nouveau"><img src="{% static "images/add.png" %}" width="30px" height="30px" title="Add"/></a>
+                                        {% endif %}
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +43,9 @@
                                         <th>DURATION</th>
                                         <th>START DATE</th>
                                         <th>END DATE</th>
+                                        {% if user.is_authenticated %}
                                         <th>Action</th>
+                                        {% endif %}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,12 +60,17 @@
                                         <td>{{morceau.duree}}</td>
                                         <td>{{morceau.date_debut}}</td>
                                         <td>{{morceau.date_fin}}</td>
+                                        {% if user.is_authenticated %}
                                         <td>
+                                            <div class="d-flex align-items-center">
                                             <ul class="action-list">
-                                                <li><a href="#" data-tip="edit"><i class="fa fa-edit"></i></a></li>
-                                                <li><a href="#" data-tip="delete"><i class="fa fa-trash"></i></a></li>
+                                                <a href="morceau_editer/{{morceau.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                                                <a href="morceau_supprimer/{{morceau.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
                                             </ul>
+                                            </div>
                                         </td>
+                                        {% else %}
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -85,6 +100,8 @@
                 </div>
             </div>
         </div>
-
-    <a href="{% url 'index' %}">Home</a>
+    </form>
+        <div class="card_back">
+            <a class="btn btn-info" href="{% url 'index' %}">Back</a>
+        </div>
 {% endblock %}
