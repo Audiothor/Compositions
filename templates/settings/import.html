@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ARTSEN{% endblock %}
+{% block content %}
+        <br>
+        <h1 class="text-center">SETTINGS - Import new songs</h1>
+        <br>
+        <p>
+            <em>Please select from which Instruments/DAW directory you want songs to be imported :</em>
+        </p>
+        <p>
+            <a href="{% url 'instruments' %}">Liste des instruments</a> <br />
+            <a href="{% url 'styles' %}">Liste des styles</a> <br />
+        </p>
+        <img src="{% static "website/musique.jpg" %}" width="100px"/>
+{% endblock %}
