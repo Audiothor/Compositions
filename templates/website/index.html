@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}ARTSEN{% endblock %}
+{% block title %}Compositions{% endblock %}
 {% block content %}
     <br>
     <h1 class="text-center">ARTSEN - Compositions</h1>
+    </br>
     <p>
         <em>&nbsp;Last 5 works :</em>
     </p>
@@ -29,4 +30,7 @@
             {% endfor %}      
         </tbody>
     </table>
+    <p>
+        [ Total : {{ nb_compositions }} works ]
+    </p>
 {% endblock %}

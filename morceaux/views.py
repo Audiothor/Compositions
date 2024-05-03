@@ -4,23 +4,52 @@ from django.forms import modelform_factory
 
 from morceaux.models import Morceau,Instrument,Style
 
-def detail(request, id):
-    morceau=get_object_or_404(Morceau,pk=id)
-    return render(request, template_name="morceaux/detail.html",context={"morceau": morceau})
 
+# Instruments
+InstrumentForm = modelform_factory(Instrument,exclude=[])
+@login_required
 def instruments_list(request):
     instruments=Instrument.objects.all()
     return render(request, template_name="morceaux/instruments_list.html",context={"instruments":instruments})
 
+@login_required
+def instrument_editer(request, id):
+    instrument=get_object_or_404(Instrument,pk=id)
+    if request.method == "POST":
+        form=InstrumentForm(request.POST, instance=instrument)
+        if form.is_valid():
+            form.save()
+            return redirect("instruments_list")
+    else:
+        form=InstrumentForm(instance=instrument)
+    return render(request,template_name="morceaux/instrument_editer.html",context={"form": form})
+
+
+@login_required
+def instrument_supprimer(request, id):
+    instrument=get_object_or_404(Instrument,pk=id)
+    if request.method == "POST":
+        instrument.delete()
+        return redirect("index")
+    else:
+        return render(request,template_name="morceaux/instrument_confirmer_supprimer.html",context={"instrument": instrument})
+    
+
+@login_required
 def styles_list(request):
     styles=Style.objects.all()
     return render(request, template_name="morceaux/styles_list.html",context={"styles":styles})
 
+# Morceaux
 def morceaux_list(request):
     morceaux=Morceau.objects.all()
     return render(request, template_name="morceaux/morceaux_list.html",context={"morceaux": morceaux})
-    
+
 MorceauForm = modelform_factory(Morceau,exclude=[])
+def detail(request, id):
+    morceau=get_object_or_404(Morceau,pk=id)
+    return render(request, template_name="morceaux/detail.html",context={"morceau": morceau})
+
 
 def search_morceau(request):
     # Check if the request is a post request.

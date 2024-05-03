@@ -1,7 +1,7 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}" >
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
@@ -18,20 +18,10 @@
         {% endif %}
     </head>
     <body>
-        <!-- {{request.get_full_path}} -->
-        <!-- Alerts ? -->
-        <!-- alert-success, alert-info, alert-warning, alert-danger -->
-        {% if ALERT_TYPE != null %}
-        <div class="alert {{ALERT_CLASS}} alert-dismissible fade show">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>{{ALERT_TYPE}} : </strong> {{ALERT_MESSAGE}}
-        </div>
-        {% endif %}
-
-        <nav class="navbar navbar-expand-md navbar-fixed-top navbar-dark bg-custom">
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-custom">
             <div class="container-fluid">
               <a class="navbar-brand" href="/">Compositions</a>
-              <a class="navbar-brand fs-6" href="/">v0.01</a>
+              <a class="navbar-brand fs-6" href="/">{{VERSION}}</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -56,17 +46,16 @@
                                     <form method="POST" action="{% url 'logout' %}">
                                         {% csrf_token %}
                                         <!-- <button type="submit">Logout</button>-->
+                                        <li><a class="dropdown-item text-dark" href="#">Config</a></li>
                                         <li><a class="dropdown-item text-dark" href="/admin">Admin</a></li>
+                                        <li><a class="dropdown-item text-dark" href="/settings/import.html">Import</a></li>
+                                        <li><a class="dropdown-item text-dark" href="/morceaux/styles">Styles</a></li>
+                                        <li><a class="dropdown-item text-dark" href="/morceaux/instruments">Instruments</a></li>
                                         <li><a class="dropdown-item text-dark" href="{% url 'logout' %}">Logout</a></li>               
                                     </form>
                                 {% else %}
                                     <a class="dropdown-item text-dark text-left" href="{% url 'login' %}">Login</a>
                                 {% endif %}
-                      
-                      <li><a class="dropdown-item text-dark" href="/settings/import.html">Import</a></li>
-                      <li><a class="dropdown-item text-dark" href="/morceaux/styles">Styles</a></li>
-                      <li><a class="dropdown-item text-dark" href="/morceaux/instruments">Instruments</a></li>
-                      <li><a class="dropdown-item text-dark" href="#">Config</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
@@ -76,8 +65,19 @@
               </div>
             </div>
         </nav>
+        <div class="container-fluid" style="padding-top: 46px;">
         {% block content %}
         {% endblock %}
+        </div>
+        <!-- {{request.get_full_path}} -->
+        <!-- Alerts ? -->
+        <!-- alert-success, alert-info, alert-warning, alert-danger -->
+        {% if ALERT_TYPE != null %}
+        <div class="alert {{ALERT_CLASS}} alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{ALERT_TYPE}} : </strong> {{ALERT_MESSAGE}}
+        </div>
+        {% endif %}
         <div class="container-fluid fixed-bottom navbar-light bg-light">
             <a class="navbar-brand fs-6">&#169 ARTSEN - 2024</a>
         </div>

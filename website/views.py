@@ -16,8 +16,9 @@ def welcome(request):
 #    return HttpResponse("ARTSEN - Gestion des compositions")
 
 def index(request):
+    nb_compositions=Morceau.objects.count()
     morceaux=Morceau.objects.all().order_by('-date_fin')[:5]
-    return render(request, template_name="website/index.html",context={"morceaux": morceaux})
+    return render(request, template_name="website/index.html",context={"morceaux": morceaux,"nb_compositions":nb_compositions})
 
 #    return render(request, template_name="website/index.html",context = {
 #        'ALERT_CLASS': 'alert-success',

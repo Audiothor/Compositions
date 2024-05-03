@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}ARTSEN{% endblock %}
+{% block title %}Compositions{% endblock %}
 {% block content %}
     <br>
     <h1 class="text-center">Instruments & DAWs</h1>
@@ -9,8 +10,9 @@
         <thead class="table-success">
             <tr>
                 <th width="5%"></th>
-                <th width="40%">Instrument or Software</th>
-                <th width="45%">Directory</th>
+                <th width="30%">Instrument or Software</th>
+                <th width="40%">Directory</th>
+                <th width="15%">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,11 +21,18 @@
                 <th></th>
                 <td>{{instrument.nom}}</td>
                 <td style="text-align: left;">{{instrument.repertoire}}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                    <ul class="action-list">
+                        <a href="../instrument_editer/{{instrument.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                        <a href="../instrument_supprimer/{{instrument.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
+                    </ul>
+                    </div>
+                </td>
             </tr>
             {% endfor %}      
         </tbody>
     </table>
-
     <div class="card_back">
         <a class="btn btn-info" href="{% url 'index' %}">Back</a>
     </div>

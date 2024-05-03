@@ -42,6 +42,9 @@ class Morceau(models.Model):
     support=models.CharField(
         max_length=20,
         null=True, blank=True)
+    work_directory=models.CharField(
+        max_length=255,
+        null=True, blank=True)
     liste_instruments=models.ForeignKey(Instrument,on_delete=models.CASCADE)
     type=models.CharField(
         max_length=30,

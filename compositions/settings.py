@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'settings',
 ]
 
+# Application variables
+VERSION="v0.20"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,10 +70,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'compositions.context_processors.variables',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'compositions.wsgi.application'
 
@@ -136,19 +141,36 @@ LOGIN_URL="/auth/login"
 # Configure Django to log all SQL queries to the console
 # You probably don't want to do this in production code
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#     }
+# }
+DEBUG=True
+
 LOGGING = {
     'version': 1,
+    'disable_existing_loggers': False,
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
         },
     },
     'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
     },
-    'root': {
-        'handlers': ['console'],
-    }
 }
