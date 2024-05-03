@@ -58,7 +58,24 @@ def select_directories(daw):
     return directories_list
 
 def select_files_details(directories):
-    print(directories)
+    #print(directories)
+    # 0. Extract name of the instrument used
+    # 1. Extract name of the composition
+    # 2. Extract the oldest file created to identify the start of the project
+    # 3. Extract date of the mixdown to identify the end of the project
+    # 4. Extract the duration of the music
+    for directory in directories:
+        #print(directory)
+        # O instrument
+        inst=Instrument.objects.filter(repertoire__contains='fsenella').values()
+        insts=Instrument.objects.all()
+        for inst in insts:
+            if str(inst.repertoire) in directory:
+                print(inst.pk)
+        #1 name
+
+    return ([])
+
 
 # result=array of the result
 # resultd=the directory name and the depth
