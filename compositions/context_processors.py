@@ -4,4 +4,4 @@ from django.conf import settings # import the settings file
 
 def variables(request):
     # return the value you want as a dictionnary. you may add multiple values in there.
-    return {'VERSION': settings.VERSION}
+    return {'VERSION': settings.VERSION,'STATICFILES_DIRS': settings.STATICFILES_DIRS}

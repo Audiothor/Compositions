@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ]
 
 # Application variables
-VERSION="v0.20"
+VERSION="v0.22"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
