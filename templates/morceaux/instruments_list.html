@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+    <br>
+    <h1 class="text-center">Instruments & DAWs</h1>
+    </br>
+    <table class="table">
+        <thead class="table-success">
+            <tr>
+                <th width="5%"></th>
+                <th width="30%">Instrument or Software</th>
+                <th width="40%">Directory</th>
+                <th width="15%">Actions</th>
+            </tr>
+        </thead>
+        {{config_form.display_website_name}}
+        <tbody>
+            {% for instrument in instruments %}
+            <tr class="table-light">
+                <th></th>
+                <td>{{instrument.nom}}</td>
+                <td style="text-align: left;">{{instrument.repertoire}}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                    <ul class="action-list">
+                        <a href="../instrument_edit/{{instrument.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                        <a href="../instrument_delete/{{instrument.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
+                    </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+    <div class="card_back">
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'instrument_new' %}">New</a>&nbsp
+    {% endif %}
+        <a class="btn btn-info" href="{% url 'index' %}">Cancel</a>
+    </div>
+    </br>
+    </br>
+{% endblock %}

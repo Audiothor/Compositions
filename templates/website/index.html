@@ -6,31 +6,80 @@
     <br>
     <h1 class="text-center">ARTSEN - Compositions</h1>
     </br>
-    <p>
-        <em>&nbsp;Last 5 works :</em>
-    </p>
     </br>
-    <table class="table">
-        <thead class="table-success">
+
+    <table style="width:100%">
+    {% for new in news %}
+        {% if new.activated %}
             <tr>
-                <th width="5%"></th>
-                <th width="40%">Work</th>
-                <th width="10%">Duration</th>
-                <th width="20%">End date</th>
+                <td style="text-align: left;">
+                    {% if config_form.news_print_creation_date.value %}
+                        <h5>{{ new.date_creation }}</h5>
+                    {% endif %} 
+                </td>
+                <td style="text-align: left;">
+                    {% if config_form.news_print_news_type.value %}
+                        <h4>{{ new.get_type_display }}</h4>
+                    {% endif %} 
+                </td>
+                <td style="text-align: center"></td>
             </tr>
-        </thead>
-        <tbody>
-            {% for morceau in morceaux %}
-            <tr class="table-light">
-                <th></th>
-                <td>{{morceau.nom}}</td>
-                <td>{{morceau.duree}}</td>
-                <td>{{morceau.date_fin | date:"d/m/Y"}}</td>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>{{ new.morceau.nom }} + {{ new.morceau.duree }} (avec lien) + genre
+                </td>
             </tr>
-            {% endfor %}      
-        </tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>image</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>commentaire</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <hr>
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
     </table>
-    <p>
-        [ Total : {{ nb_compositions }} works ]
-    </p>
+
+    {% if config_form.news_print_last_five_music.value %}
+    </br>
+    <CENTER>
+        <h4><em>&nbsp;Last 5 works :</em></h4>
+    </CENTER>
+    </br>
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th width="5%"></th>
+                    <th width="40%">Work</th>
+                    <th width="10%">Duration</th>
+                    <th width="20%">End date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for morceau in morceaux %}
+                <tr class="table-light">
+                    <th></th>
+                    <td>{{morceau.nom}}</td>
+                    <td>{{morceau.duree}}</td>
+                    <td>{{morceau.date_fin | date:"d/m/Y"}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            [ Total : {{ nb_compositions }} works ]
+        </p>
+        </br>
+        </br>
+    {% endif %}
 {% endblock %}
+

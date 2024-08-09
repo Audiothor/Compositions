@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Compositions{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="text-center">{{ action_label }} music style</h1>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <table style="width:100%;">
+            <tr>
+                <td style="width:'80%';align:'center';">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-2">{{ form.nom.label_tag }}</div>
+                            <div class="col-md-6">{{ form.nom }}</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="card_action">
+                        </br>
+                        <button class="btn btn-success" type="submit">Save</button>&nbsp
+                        <a class="btn btn-info" href="{% url 'styles_list' %}">Cancel</a>&nbsp
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </br>
+    </br>
+{% endblock %}

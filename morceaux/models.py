@@ -3,19 +3,23 @@ from django.db import models
 # Instruments
 class Instrument(models.Model):
     nom=models.CharField(
-        max_length=200,
+        max_length=150,
         verbose_name="Name")
     repertoire=models.CharField(
         max_length=250,
-        verbose_name="Directory",null=True, blank=True)    
-    def __str__(self) -> str:
-        return f"{self.nom} {self.repertoire}"
+        verbose_name="Directory",null=True, blank=True)
     
-# Styles de musiques
+    class Meta:
+        ordering = ['nom']
+
+    def __str__(self) -> str:
+        return f"{self.nom}"
+    
+# Genre de musiques
 class Style(models.Model):
     nom=models.CharField(
         max_length=200,
-        verbose_name="Nom du style")
+        verbose_name="Style")
     
     def __str__(self) -> str:
         return f"{self.nom}"
@@ -23,18 +27,18 @@ class Style(models.Model):
 # Morceaux
 class Morceau(models.Model):
     nom=models.CharField(
-        max_length=200,
+        max_length=150,
         verbose_name="Nom du morceau")
     duree=models.CharField(
-        max_length=5,
+        max_length=8,
         verbose_name="Durée du morceau",
         null=True, blank=True)
     date_debut=models.DateField(null=True, blank=True)
     date_fin=models.DateField(null=True, blank=True)
     commentaire=models.TextField(null=True, blank=True)
     locked=models.BooleanField(default=False)
-    termine=models.BooleanField(default=False)
-    mixe=models.BooleanField(default=False)
+    finished=models.BooleanField(default=False)
+    mixed=models.BooleanField(default=False)
     documentation=models.BooleanField(default=False)
     fichier_documentation=models.CharField(
         max_length=255,
@@ -42,13 +46,13 @@ class Morceau(models.Model):
     support=models.CharField(
         max_length=20,
         null=True, blank=True)
-    work_directory=models.CharField(
-        max_length=255,
-        null=True, blank=True)
-    liste_instruments=models.ForeignKey(Instrument,on_delete=models.CASCADE)
-    type=models.CharField(
-        max_length=30,
-        null=True, blank=True)
+    instrument=models.ForeignKey(Instrument,on_delete=models.CASCADE,blank=True, null=True)
+    style=models.ForeignKey(Style,on_delete=models.CASCADE,blank=True, null=True)
+
+    download=models.BooleanField(default=True)
+    player=models.BooleanField(default=True)
+    music_file = models.FileField(upload_to="musics",null=True,blank=True)
+    image_file = models.FileField(upload_to="images",null=True,blank=True)
     
     def __str__(self) -> str:
-        return f"{self.nom} {self.duree} - {self.date_fin}"
+        return f"{self.nom}"
