@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+<form method="post" action="">
+    {% csrf_token %}
+    <br>
+    <h1 class="text-center">CONFIG - Configuration Compositions</h1>
+    <br>
+    </br>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                Compositions Version : {{VERSION}}</br>Last update : xx
+            </td>
+            <td>
+                <em>The config file is stored in static/config/compositions.yaml.</em>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                </br>
+                <b>DISPLAY</b>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <li>Website name : {{ form.display_website_name }}
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                </br>
+                <b>NEWS</b>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <li>Sort the News by Creation Date (else by id order): {{ form.news_print_sorted_creation_date }}
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <li>Print Creation Date : {{ form.news_print_creation_date }}
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <li>Print Type of News : {{ form.news_print_news_type }}
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <li>Print the last 5 music creations : {{ form.news_print_last_five_music }}
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+    </br>
+    </br>
+    <button class="btn btn-success" type="submit">Update</button>
+</form>
+{% endblock %}

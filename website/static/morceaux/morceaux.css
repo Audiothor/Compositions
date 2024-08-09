@@ -163,3 +163,17 @@
     }
     .panel .panel-heading .btn_group{ text-align: center; }
 }
+
+.modal-body {
+    color: black;
+  }
+.modal-header {
+    background: rgb(152, 158, 197);
+  }
+.form-row {
+    display: inline-block;
+    margin-right: 10px;
+}
+.form-row label {
+    margin-right: 5px;
+}

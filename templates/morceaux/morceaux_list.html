@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+    <br>
+    <h1 class="text-center">List of musical compositions</h1>
+    <p>
+        Liste complète des compositions écrites.
+    </p>
+    {% if query %}
+    {{ query }}
+    {% endif %}
+
+
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col col-sm-3 col-xs-12">
+                    <h4 class="title">Data <span>List</span></h4>
+                </div>
+                <div class="col-sm-9 col-xs-12 text-right">
+                    <div class="btn_group">
+                        <form role="search" method="POST" action="{% url 'blog-search-post' %}">
+                        {% csrf_token %}
+                            <input type="search" class="form-control me-2" placeholder="Search" name="search_query" required aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        {% if user.is_authenticated %}
+                        &nbsp;
+                        <a class="btn btn-primary" href="morceau_nouveau">New</a>
+                        {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><a href="?order_by=nom&direction={{direction}}">TITLE</a></th>
+                        <th><a href="?order_by=duree&direction={{direction}}">DURATION</a></th>
+                        <th><a href="?order_by=date_debut&direction={{direction}}">START DATE</a></th>
+                        <th><a href="?order_by=date_fin&direction={{direction}}">END DATE</a></th>
+                        <th><a href="?order_by=style&direction={{direction}}">STYLE</a></th>
+                        {% if user.is_authenticated %}
+                        <th>Action</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for morceau in morceaux %}
+                    <tr>
+                        <td>{{morceau.id}}</td>
+                        <td>
+                            <a href="{% url 'detail' morceau.id %}">
+                                {{morceau.nom}}
+                            </a>
+                        </td>
+                        <td>{{morceau.duree}}</td>
+                        <td>{{morceau.date_debut}}</td>
+                        <td>{{morceau.date_fin}}</td>
+                        <td>{{morceau.style}}</td>
+                        {% if user.is_authenticated %}
+                        <td>
+                            <div class="d-flex align-items-center">
+                            <ul class="action-list">
+                                <a href="morceau_editer/{{morceau.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                                {% if morceau.lock %}
+                                    <a href="morceau_unlock/{{morceau.id}}"><img src="{% static "images/lock.jpg" %}" width="20px" height="20px" title="Unlock"/></a>
+                                {% else %}
+                                    <a href="morceau_lock/{{morceau.id}}"><img src="{% static "images/unlock.png" %}" width="20px" height="20px" title="Lock"/></a>
+                                {% endif %}
+                                <a href="morceau_supprimer/{{morceau.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
+                            </ul>
+                            </div>
+                        </td>
+                        {% else %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>{{ total_musics }}</b> entries</div>
+                <div class="col-sm-6 col-xs-6">
+                    <ul class="pagination hidden-xs pull-right">
+                        <li><a href="#"><</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">></a></li>
+                    </ul>
+                    <ul class="pagination visible-xs pull-right">
+                        <li><a href="#"><</a></li>
+                        <li><a href="#">></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

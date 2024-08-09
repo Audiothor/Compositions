@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from website.views import index,welcome,about,biography
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +32,8 @@ urlpatterns = [
     path('morceaux/',include('morceaux.urls')),
     # URL de login
     path('auth/',include('django.contrib.auth.urls')),
+    # URL de settings
     path('settings/',include('settings.urls')),
-]
+    # URL de news
+    path('news/',include('news.urls')),
+] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

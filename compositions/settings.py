@@ -41,11 +41,15 @@ INSTALLED_APPS = [
     'bootstrap5',
     'website',
     'morceaux',
+    'news',
     'settings',
 ]
 
 # Application variables
-VERSION="v0.22"
+VERSION="v0.30"
+MEDIA_ROOT=BASE_DIR / 'media'
+MEDIA_URL="/media/"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'compositions.context_processors.variables',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -127,6 +132,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
+#STATICFILES_DIRS = [BASE_DIR / "static/",BASE_DIR / "medias/",]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

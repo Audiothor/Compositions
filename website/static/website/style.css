@@ -4,9 +4,14 @@ body {
     background-color: rgb(35, 34, 34);
 }
 
-a:visited {
-    color: #FFFFFF; /* Couleur du texte en blanc pour les liens visités */
-}
+.text_black:visited {color:black;
+    font-weight: bold}
+.text_black {color:black;
+    font-weight: bold}
+.text_white:visited {color:white;}
+.text_white {color:white;}
+.text_purple {
+    color: rgb(190 18 60);}
 
 .titre {
     font-family: sans-serif;
@@ -15,13 +20,12 @@ a:visited {
 }
 
 .card {
-    width: 60%;
-    padding: 1%;
+
     background-color: #373737;
     border-radius: 10px 10px 10px 10px;
     border-color: #FFFFFF;
-    display: table;
-    margin: 0 auto;
+    padding: 20px 20px 20px 20px;
+
 }
 
 .card_action {
@@ -49,3 +53,8 @@ a:visited {
 .bg-custom {
     background: linear-gradient(to bottom, #251b8f 0, #251b8f 100%);
 }
+
+.modal-header {
+    background-color: darkblue;
+    color: white;
+  }

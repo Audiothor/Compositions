@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Compositions{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="text-center">{{ action_label }} news</h1>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <table style="width:100%;">
+            <tr>
+                <td style="width:'80%';align:'center';">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-2">{{ form.title.label_tag }}</div>
+                            <div class="col-md-6">{{ form.title }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.type.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.type }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.date_creation.label_tag }}</div>
+                            <div class="col-md-3">{{ form.date_creation }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.start_publication.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.start_publication }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.end_publication.label_tag }}</div>
+                            <div class="col-md-6">{{ form.end_publication }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.comment.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.comment }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.order.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.order }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.morceau.label_tag }}</div>
+                            <div class="col-md-6">{{ form.morceau }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-2">{{ form.activated.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.activated }}</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- <button type="submit">Mettre à jour</button> -->
+                    <div class="card_action">
+                        </br>
+                        <button class="btn btn-success" type="submit">Save</button>&nbsp
+                        <a class="btn btn-info" href="{% url 'news_list' %}">Cancel</a>&nbsp
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </br>
+    </br>
+{% endblock %}
+
+
+
+
+
+morceau=models.ManyToManyField('morceaux.Morceau')
+comment=models.TextField(blank=True)
+
+activated=models.BooleanField(default=True

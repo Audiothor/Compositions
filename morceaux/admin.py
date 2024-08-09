@@ -7,7 +7,7 @@ from morceaux.models import Morceau,Instrument,Style
 @admin.register(Morceau)
 class MorceauAdmin(ModelAdmin):
     model = Morceau
-    list_display=("id","nom","date_debut","date_fin","termine")
+    list_display=("id","nom","date_debut","date_fin","finished")
     ordering=("date_debut","date_fin","nom")
     search_fields=("nom",)
 
