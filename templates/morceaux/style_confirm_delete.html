@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block title %}Compositions{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="text-center">Delete Style</h1>
+    <br>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="width: 40%;margin: 0 auto;border: 1px solid white;">
+            </br>
+            <p style="text-align: center;">Delete the style '{{style.nom}}' ?</p>
+            </br>
+        </div>
+        </br>
+        <div style="width: 40%;margin: 0 auto;">
+            <p style="text-align: right;">
+                <button class="btn btn-danger" type="submit">Confirm</button>
+                <a class="btn btn-info" href="{% url 'styles_list' %}">Cancel</a>&nbsp
+            </p>
+        </div>
+    </form>
+    </br>
+{% endblock %}

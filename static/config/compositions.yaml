@@ -1,0 +1,13 @@
+display_website_name: ARTSEN
+musics_list_view: false
+musics_print_hits: true
+news_image_input_welcome: /static/images/simon.jpg
+news_print_creation_date: true
+news_print_image_welcome: true
+news_print_last_five_music: true
+news_print_news: true
+news_print_news_type: true
+news_print_number_musics_page: 50
+news_print_sorted_creation_date: true
+news_print_text_welcome: true
+news_text_input_welcome: ARTSEN - Compositions

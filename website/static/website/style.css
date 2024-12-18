@@ -1,0 +1,76 @@
+body {
+    font-family: sans-serif;
+    color: rgb(255, 255, 255);
+    background-color: rgb(35, 34, 34);
+}
+
+.text_black:visited {color:black;
+    font-weight: bold}
+.text_black {color:black;
+    font-weight: bold}
+.text_white:visited {color:white;}
+.text_white {color:white;}
+.text_purple {
+    color: rgb(190 18 60);}
+
+.titre {
+    font-family: sans-serif;
+    color: cornflowerblue;
+    background-color: rgb(35, 34, 34);
+}
+
+.card {
+
+    background-color: #373737;
+    border-radius: 10px 10px 10px 10px;
+    border-color: #FFFFFF;
+    padding: 20px 20px 20px 20px;
+
+}
+
+.card_action {
+    width: 30%;
+    padding: 1%;
+    /* background-color: #f1f1f1; */
+    /* border-radius: 10px 10px 10px 10px; */
+    display: table;
+    margin: 0 auto;
+    margin-right: 10%;
+    text-align: center;
+}
+
+.card_back {
+    width: 30%;
+    padding: 1%;
+    /* background-color: #f1f1f1; */
+    /* border-radius: 10px 10px 10px 10px; */
+    display: table;
+    margin: 0 auto;
+    margin-right: 10%;
+    text-align: right;
+}
+
+.bg-custom {
+    background: linear-gradient(to bottom, #251b8f 0, #251b8f 100%);
+}
+
+.modal-header {
+    background-color: darkblue;
+    color: white;
+  }
+
+/* Total musics */
+.adroite {
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    padding-right: 20px; /* Optionnel : ajoute un peu d'espace à droite */
+}
+
+/* Text title in the index page */
+.news_title_background {
+    background-color: rgb(130, 130, 124);
+    vertical-align: middle;
+    text-align: left; /* Centre horizontalement */
+}
+

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+    <br>
+    <h1 class="text-center">NEWS list</h1>
+    </br>
+    <table class="table">
+        <thead class="table-success">
+            <tr>
+                <th width="5%">id</th>
+                <th width="40%">News titles</th>
+                <th style="text-align: center;" width="10%">Type</th>
+                <th width="10%">Start publi.</th>
+                <th width="10%">End publi.</th>
+                <th style="text-align: center;" width="5%">Activated</th>
+                <th style="text-align: center;" width="15%">Actions</th>
+            </tr>
+        </thead>
+        {{config_form.display_website_name}}
+        <tbody>
+            {% for new in news %}
+            <tr class="table-light">
+                <td>{{new.id}}</td>
+                <td>
+                    <a href="{% url 'news_edit' new.id %}" class="text_black">{{new.title}}</a>
+                </td>
+                <td style="text-align: center;">{{new.type}}</td>
+                <td style="text-align: left;">{{new.start_publication}}</td>
+                <td style="text-align: left;">{{new.end_publication}}</td>
+                <td style="text-align: center;">
+                    {% if new.activated is True %}
+                        <a href="news_publish/{{new.id}}"><img src="{% static "website/ok.png" %}" width="29px" height="29px"/></a>
+                    {% else %}
+                        <a href="news_publish/{{new.id}}"><img src="{% static "website/ko.png" %}" width="19px" height="19px"/></a>
+                    {% endif %}
+                </td>
+                <td style="text-align: center;">
+                    <ul class="action-list">
+                        <a href="news_edit/{{new.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                        <a href="news_delete/{{new.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+    <div class="card_back">
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'news_add' %}">Add</a>&nbsp
+    {% endif %}
+        <a class="btn btn-info" href="{% url 'index' %}">Cancel</a>
+    </div>
+    </br>
+    </br>
+{% endblock %}

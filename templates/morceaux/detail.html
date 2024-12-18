@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+
+{% block content %}
+<br>
+<table style="width:80%">
+    <tr>
+        <td>
+            <table style="width:80%" align="right">
+                <tr>
+                    <td>
+                        <div class="card">
+                            <table style="border-collapse: collapse; width: 100%; border='1'">
+                                <tr style="height: 18px;">
+                                    <td style="width: 90%;"><h1><b>{{morceau.nom}}</b></h1></td>
+                                    <td style="width: 10%;text-align: right;"><h3>{{morceau.date_fin | date:"Y"}}</h3></td>
+                                </tr>
+                            </table> 
+                            <hr>
+                            <table style="border-collapse: collapse; width: 100%;border='0'">
+                                <tr style="height: 18px;">
+                                    <td style="width: 50%;"><b>Duration : </b>{{morceau.duree}}</td>
+                                    <td style="width: 50%;text-align: right;"><b>Start date : </b>{{morceau.date_debut | date:"d/m/Y"}}</td>
+                                </tr>
+                                <tr style="height: 12px;">
+                                    <td style="width: 50%;">&nbsp</td>
+                                    <td style="width: 50%;text-align: right;"><b>End date : </b>{{morceau.date_fin | date:"d/m/Y"}}</td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse; width: 100%;border='0'">
+                                <tr style="height: 18px;">
+                                    <td style="text-align: center;" rowspan="3">
+                                        {% if morceau.image_file %}
+                                        <!-- <img src="{% static 'medias/images/' %}{{morceau.image_file}}" width="300px" height="300px"/> -->
+                                        <img src="{{ morceau.image_file.url }}" width="300px" height="300px"/>
+                                        {% else %}
+                                        <img width="300px" height="300px"/>
+                                        {% endif %}
+                                    </td>
+                                    <td style="text-align: right;">
+                                        </br>
+                                        <b>Styles : </b>&nbsp;
+                                        {% for style in morceau.style.all %}
+                                            <div class="style">{{ style }}</div>&nbsp;
+                                        {% endfor %}
+                                        </br>
+                                        <b>Instruments : </b>&nbsp;
+                                        {% for instrument in morceau.instrument.all %}
+                                            <div class="style">{{ instrument }}</div>&nbsp;
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr style="text-align: right;height: 18px;">
+                                    <td>{% if user.is_authenticated %}
+                                            </br>
+                                            <b>Hits : </b>&nbsp;{{ morceau.hits }}
+                                            </br>
+                                        {% endif %}
+                                        <b>Locked : </b>&nbsp;
+                                        {% if morceau.locked is True %}
+                                            <img src="{% static "website/ok.png" %}" width="29px" height="29px"/>
+                                        {% else %}
+                                            <img src="{% static "website/ko.png" %}" width="19px" height="19px"/>
+                                        {% endif %}
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <b>Mixed : </b>&nbsp;
+                                        {% if morceau.mixed is True %}
+                                            <img src="{% static "website/ok.png" %}" width="29px" height="29px"/>
+                                        {% else %}
+                                            <img src="{% static "website/ko.png" %}" width="19px" height="19px"/>
+                                        {% endif %}
+                                        </br>
+                                        <b>Documents : </b>&nbsp;
+                                        {% if morceau.documentation is True %}
+                                            <img src="{% static "website/ok.png" %}" width="29px" height="29px"/>
+                                        {% else %}
+                                            <img src="{% static "website/ko.png" %}" width="19px" height="19px"/>
+                                        {% endif %}
+                                        </br>
+                                        </br>
+                                        <b>Finished : </b>&nbsp;
+                                        {% if morceau.finished is True %}
+                                            <img src="{% static "website/ok.png" %}" width="29px" height="29px"/>
+                                        {% else %}
+                                            <img src="{% static "website/ko.png" %}" width="19px" height="19px"/>
+                                        {% endif %}
+                                        </br>
+                                        </br>
+                                        {% if morceau.music_file %}
+                                            {% if morceau.player is True %}
+                                                <audio style="width: 250px; height: 25px" controls controlsList="nodownload noplaybackrate">
+                                                    <source src="{{ morceau.music_file.url }}" type="audio/wav">
+                                                    Your browser is not supporting the html audio tag.
+                                                </audio>
+                                            {% endif %}
+                                            </br>
+                                            {% if morceau.download is True %}
+                                                <a href="{{ morceau.music_file.url }}" download="{{morceau.music_file}}">
+                                                    <img src="{% static "images/download.png" %}" height="40px" border-color: "white"/>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr>
+                            <table style="border-collapse: collapse; width: 100%;border='0'">
+                                <tr style="height: 18px;">
+                                    <td style="width: 50%;"><b>Comments : </b><br>{{morceau.commentaire}}</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td valign="bottom" align="left">
+            <table>
+                <tr>
+                    <td style="padding-left: 10px;">
+                        &nbsp;
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-primary" href="{% url 'morceau_editer' morceau.id %}">Edit</a>&nbsp;</br></br>&nbsp;
+                            <a class="btn btn-secondary" href="{% url 'morceau_cloner' morceau.id %}">Clone</a></br></br>&nbsp;
+                            <a class="btn btn-danger" href="{% url 'morceau_supprimer' morceau.id %}">Delete</a></br></br>&nbsp;
+                        {% endif %}
+                            <a class="btn btn-info" href="{% url 'morceaux' %}">Back</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{% endblock %}
+<!--
+    <a style="color: black" href="{% url 'morceau_editer' morceau.id %}">Edit</a>
+    <a style="color: black" href="{% url 'morceau_supprimer' morceau.id %}">Delete</a>
+    <a style="color: black" href="{% url 'index' %}">Cancel</a>
+
+-->
+

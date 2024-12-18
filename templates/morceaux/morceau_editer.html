@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Compositions{% endblock %}
+
+{% block content %}
+    </br>
+    </br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table style="width:80%">
+            <tr>
+                <td style="width: '100%';">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-3">{{ form.nom.label_tag }}</div>
+                            <div class="col-md-6">{{ form.nom }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.duree.label_tag }}</div>
+                            <div class="col-sm-2">{{ form.duree }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.date_debut.label_tag }}</div>
+                            <div class="col-md-1">{{ form.date_debut }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.hits.label_tag }}</div>
+                            <div class="col-md-1">{{ form.hits }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.date_fin.label_tag }}</div>
+                            <div class="col-md-1">{{ form.date_fin }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.image_file.label_tag }}</div>
+                            <div class="col-md-6">{{ form.image_file }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.instrument.label_tag }}</div>
+                            <div class="col-md-6">{{ form.instrument }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.style.label_tag }}</div>
+                            <div class="col-md-6">{{ form.style }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.music_file.label_tag }}</div>
+                            <div class="col-md-6">{{ form.music_file }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.mixed.label_tag }}</div>
+                            <div class="col-md-6"> {{ form.mixed }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.finished.label_tag }}</div>
+                            <div class="col-md-6">{{ form.finished }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.download.label_tag }}</div>
+                            <div class="col-md-6">{{ form.download }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.player.label_tag }}</div>
+                            <div class="col-md-6">{{ form.player }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.locked.label_tag }}</div>
+                            <div class="col-md-6">{{ form.locked }}</div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-md-3">{{ form.commentaire.label_tag }}</div>
+                            <div class="col-md-6">{{ form.commentaire }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td valign="bottom" align="left">
+                    <table>
+                        <tr>
+                            <td style="padding-left: 10px;">
+                                <button class="btn btn-success" type="submit">Save</button>&nbsp
+
+                            </td>
+                            <td>
+                                <a class="btn btn-info" href="{% url 'morceaux' %}">Cancel</a>&nbsp
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+</br>
+</br>
+
+{% endblock %}

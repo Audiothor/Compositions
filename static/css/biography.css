@@ -1,0 +1,9 @@
+.blockquote {
+    color:#f0f0f0;
+    font-size: 1em;
+    font-family: "Lucida Lucida Handwriting", "Courier New", monospace;
+}
+
+.blockquote-footer {
+    font-size: 0.75em;
+}

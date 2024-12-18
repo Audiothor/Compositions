@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        <br>
+        <h1 class="text-center">SETTINGS - Import new musical compositions</h1>
+        <br>
+        <em>Please select the directories you want to import.</em>
+        </br>
+        <em>Nota : All compositions which are locked are not included into this possible imports.</em>
+        </br>
+        </br>Import some {{ daw_name }} works :
+        </br>
+                {% for d in directories_list.0 %}
+                    {% if d.1 != '0' %}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {% else %}
+        </br>&nbsp;
+                    {% endif %}        
+                        <input class="form-check-input" name="chk_directories" type="checkbox" value="{{ d.0 }}" id="chk_directories" unchecked>&nbsp;{{ d.0 }}</br>
+                {% endfor %}
+
+
+        <div class="card_action">
+            <button class="btn btn-danger" type="submit">Collect</button>&nbsp;
+            <a class="btn btn-info" href="{% url 'index' %}">Cancel</a>
+            <input type="hidden" id="daw" name="daw_import" value="{{ daw_id }};{{ daw_name }}">
+        </div>
+        <br>        
+        <br>
+</form>
+{% endblock %}
+

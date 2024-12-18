@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+    </br>
+    <div class="image-container">
+        <img src='{{config_form.news_image_input_welcome.value}}' alt="Image" style="max-width: 600px;">
+        <div class="text-overlay">{{config_form.news_text_input_welcome.value}}</div>
+    </div>
+    </br>
+    {% if config_form.news_print_news.value %}
+        <div class="news_title_background">
+            <h4><em>&nbsp;Last News :</em></h4>
+        </div>
+        </br>
+        <table style="width:100%">
+            <tr>
+                <th width="20%"></th>
+                <th width="20%"></th>
+                <th width="60%"></th>
+            </tr>
+        {% for new in news %}
+            {% if new.activated %}
+              {% if new.type == "Information" %}
+                <tr>
+                    <td style="text-align: left;">
+                        {% if config_form.news_print_creation_date.value %}
+                            <h5>{{ new.date_creation }}</h5>
+                        {% endif %} 
+                    </td>
+                    <td style="text-align: left;">
+                        {{ new.comment }}
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>commentaire</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <hr>
+                    </td>
+                </tr>
+              {% else %}
+                <tr>
+                    <td style="vertical-align: top;text-align: left;">
+                        {% if config_form.news_print_creation_date.value %}
+                            <h5>{{ new.date_creation }}</h5>
+                        {% endif %} 
+                    </td>
+                    <td style="text-align: left;">
+                        {% for morceau in morceaux %}
+                            {% if new.morceau_id == morceau.id %}
+                                {% if morceau.image_file %}
+                            <!-- <img src="{% static 'medias/images/' %}{{morceau.image_file}}" width="300px" height="300px"/> -->
+                                <a href="morceaux/{{morceau.id}}"><img src="{{ morceau.image_file.url }}" width="300px" height="300px" title="{{morceau.nom}}"/></a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td style="width: 600px;vertical-align: top;text-align: left;">
+                        {% if config_form.news_print_news_type.value %}
+                            <p style="font-family: 'Georgia', sans-serif; font-size: 30px;">{{ new.morceau.nom }}</p>
+                        {% endif %}
+                        <p class="h6">&nbsp;&nbsp;&nbsp;Duration : {{ new.morceau.duree }}</p>
+                        [ELECTRO]
+                        {{ new.comment }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <hr>
+                    </td>
+                </tr>
+              {% endif %} 
+            {% endif %}
+        {% endfor %}
+        </table>
+    {% endif %} 
+
+    {% if config_form.news_print_last_five_music.value %}
+    </br>
+    <div class="news_title_background">
+        <h4><em>&nbsp;Last 5 works :</em></h4>
+    </div>
+    </br>
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th width="5%"></th>
+                    <th width="40%">Work</th>
+                    <th width="10%">Duration</th>
+                    <th width="20%">End date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for morceau in morceaux %}
+                <tr class="table-light">
+                    <th></th>
+                    <td>{{morceau.nom}}</td>
+                    <td>{{morceau.duree}}</td>
+                    <td>{{morceau.date_fin | date:"d/m/Y"}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            [ Total : {{ nb_compositions }} works ]
+        </p>
+        </br>
+        </br>
+    {% endif %}
+{% endblock %}
+

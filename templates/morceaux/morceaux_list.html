@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compositions{% endblock %}
+{% block content %}
+    <br>
+    <h1 class="text-center">Musical works</h1>
+    </br>
+    {% comment %} {% if query %}
+    {{ query }}
+    {% endif %} {% endcomment %}
+    <!-- List view -->
+    {% if toggle_view == "list" %}
+        <a class="toggle-view" href="?toggle_view=detail">Detail view</a>
+        <input type="hidden" name="toggle_view" value="list">
+
+        <div class="panel">
+            <div class="panel-heading">
+                    <div class="col-sm-9 col-xs-12 text-right">
+                        <div class="btn_group">
+                            <form role="search" method="POST" action="{% url 'blog-search-post' %}" class="d-flex w-100">
+                                {% csrf_token %}
+                                <input type="search" class="form-control me-2" placeholder="Search" name="search_query" required aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                {% if user.is_authenticated %}
+                                    <div class="ms-auto">
+                                        <a class="btn btn-primary" href="morceau_nouveau">New</a>
+                                    </div>
+                                {% endif %}
+                                &nbsp;&nbsp;
+                                {% if user.is_authenticated %}
+                                        <a class="btn btn-primary" href="export_csv">Export CSV</a>
+                                {% endif %}
+                                <div class="adroite">Total : {{total_musics}}</div>
+                            </form>
+                
+                        </div>
+                    </div>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><a href="?order_by=nom&direction={{direction}}&toggle_view=list">TITLE</a></th>
+                            <th><a href="?order_by=duree&direction={{direction}}&toggle_view=list">DURATION</a></th>
+                            <th><a href="?order_by=date_debut&direction={{direction}}&toggle_view=list">START DATE</a></th>
+                            <th><a href="?order_by=date_fin&direction={{direction}}&toggle_view=list">END DATE</a></th>
+                            <th><a href="?order_by=style&direction={{direction}}&toggle_view=list">STYLE</a></th>
+                            {% if user.is_authenticated %}
+                            <th>Action</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for morceau in page_obj %}
+                        <tr>
+                            <td>{{morceau.id}}</td>
+                            <td>
+                                <a href="{% url 'detail' morceau.id %}">
+                                    {{morceau.nom}}
+                                </a>
+                            </td>
+                            <td>{{morceau.duree}}</td>
+                            <td>{{morceau.date_debut}}</td>
+                            <td>{{morceau.date_fin}}</td>
+                            <td>{% for style in morceau.style.all %}                   
+                                    <div class="style">{{ style }}</div>
+                                {% endfor%}
+                            </td>
+                            {% if user.is_authenticated %}
+                            <td>
+                                <div class="d-flex align-items-center">
+                                <ul class="action-list">
+                                    <a href="morceau_editer/{{morceau.id}}"><img src="{% static "images/edit.png" %}" width="20px" height="20px" title="Edit"/></a>
+                                    {% if morceau.lock %}
+                                        <a href="morceau_unlock/{{morceau.id}}"><img src="{% static "images/lock.jpg" %}" width="20px" height="20px" title="Unlock"/></a>
+                                    {% else %}
+                                        <a href="morceau_lock/{{morceau.id}}"><img src="{% static "images/unlock.png" %}" width="20px" height="20px" title="Lock"/></a>
+                                    {% endif %}
+                                    <a href="morceau_supprimer/{{morceau.id}}"><img src="{% static "images/delete.png" %}" width="20px" height="20px" title="Delete"/></a>
+                                </ul>
+                                </div>
+                            </td>
+                            {% else %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1&toggle_view=list">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}&toggle_view=list">previous</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}&toggle_view=list">next</a>
+                            <a href="?page={{ paginator.num_pages }}&toggle_view=list">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    <!-- Detail view -->
+    {% else %}
+        <div class="panel2">
+            <a class="toggle-view" href="?toggle_view=list">List view</a>
+            <input type="hidden" name="toggle_view" value="detail">
+
+            <table class="detail_center-table">
+                <tr>
+                    <th>
+                        <form role="search" method="POST" action="{% url 'blog-search-post' %}" class="d-flex w-100">
+                            {% csrf_token %}
+                        <input type="search" placeholder="Search" name="search_query" >
+                        <button class="detail_button" type="submit">Search</button>
+                        </form>
+                    </th>
+                    <th>Filter : 
+                        <select id="filterSelect" size="1">
+                            <option value="nom" {% if order_by == "nom" %}selected{% endif %}>Name</option>
+                            <option value="duree" {% if order_by == "duree" %}selected{% endif %}>Duration</option>
+                            <option value="date_fin" {% if order_by == "date_fin" %}selected{% endif %}>Date</option>
+                            <option value="locked" {% if order_by == "locked" %}selected{% endif %}>Locked</option>
+                            <option value="finished" {% if order_by == "finished" %}selected{% endif %}>Finished</option>
+                            <option value="mixed" {% if order_by == "mixed" %}selected{% endif %}>Mixed</option>
+                        </select>
+                        &nbsp;
+                        &nbsp;
+                        Direction :
+                        <select id="directionSelect" size="1">
+                            <option value="asc" {% if direction == "desc" %}selected{% endif %}>Desc</option>
+                            <option value="desc" {% if direction == "asc" %}selected{% endif %}>Asc</option>
+                        </select>
+                        &nbsp;
+                        &nbsp;
+                        {% if user.is_authenticated %}
+                            <a class="detail_button" href="morceau_nouveau">New</a>
+                        {% endif %}
+                    </th>
+                    <th>Total : {{total_musics}}</th>
+                </tr>
+                <tbody>
+                    <!-- Inclusion du script JavaScript -->
+                    <script>
+                        document.getElementById('filterSelect').addEventListener('change', function() {
+                            const selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+                            var selectDirection = document.getElementById("directionSelect");
+                            var direction = selectDirection.options[selectDirection.selectedIndex].value;
+                            const queryString = selectedOptions.map(option => `order_by=${option}&direction=${direction}`).join('&');
+                            window.location.href = `/morceaux/?toggle_view=detail&${queryString}`;
+                        });
+                    </script>
+
+                    {% for morceau in page_obj %}
+                    <tr class="detail_morceau-title">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="detail_spaced-row">
+                        <td width="30%">&nbsp;</td>
+                        <td width="60%">&nbsp;</td>
+                        <td width="10%">&nbsp;</td>
+                    </tr>
+                    <tr class="detail_spaced-row">
+                        <td width="30%">
+                            {% if morceau.image_file %}
+                                <a href="{{morceau.id}}"><img src="{{ morceau.image_file.url }}" width="300px" height="300px" title="{{morceau.nom}}"/></a>
+                            {% endif %}
+                        </td>
+                        <td width="60%">
+                            {% if morceau.nom %}
+                            <p style="font-family: 'Georgia', sans-serif; font-size: 30px;">{{ morceau.nom }}</p>
+                            {% endif %}
+                            {% for style in morceau.style.all %}                   
+                                <div class="style">{{ style }}</div>
+                            {% endfor%}
+                            {% if morceau.duree %}
+                            </br></br>
+                            <p style="font-family: 'Arial', sans-serif; font-size: 18px;">{{ morceau.duree }}</p>
+                            {% endif %}
+                            {% if morceau.music_file %}
+                                {% if morceau.player is True %}
+                                    </br></br></br></br>
+                                    <audio style="width: 250px; height: 25px" controls controlsList="nodownload noplaybackrate">
+                                        <source src="{{ morceau.music_file.url }}" type="audio/wav">
+                                        Your browser is not supporting the html audio tag.
+                                    </audio>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td width="10%",text-align="right";><h3>{{morceau.date_fin | date:"Y"}}</h3></td>
+                    </tr>
+                    <tr class="detail_spaced-row">
+                        <td width="30%">&nbsp;</td>
+                        <td width="40%">&nbsp;</td>
+                        <td width="30%">&nbsp;</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="panel-footer">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1&toggle_view=detail">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}&toggle_view=detail">previous</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}&toggle_view=detail">next</a>
+                            <a href="?page={{ paginator.num_pages }}&toggle_view=detail">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            </br>
+            </br>
+        </div>
+    {% endif %}
+{% endblock %}
+
