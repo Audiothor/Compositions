@@ -1,13 +1,16 @@
-version: '3'
+version: '3.3'
 services:
-  web:
-
-    build:
-      context: .
-      dockerfile: Dockerfile
+  compositions:
+    container_name: compositions
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - /system/appdata/compositeurs:/app
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - '8000:8000'
-
-    entrypoint: '/app/entrypoint.sh gunicorn'
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
