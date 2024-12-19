@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]
 
 # Application variables
-VERSION="v0.52"
+VERSION="v0.52.0"
 MEDIA_ROOT=BASE_DIR / 'media'
 MEDIA_URL="/media/"
 
