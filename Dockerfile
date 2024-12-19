@@ -21,7 +21,10 @@ RUN python3 -m pip install --upgrade pip
 RUN pip install django
 
 COPY requirements.txt /app/
-RUN pip install -r requirements.txt
+RUN pip install -no-cache-dir -r requirements.txt
+
+#Exposer le port sur lequel il va tourner
+EXPOSE 8000
 
 # Start the Django development server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
