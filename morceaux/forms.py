@@ -1,5 +1,8 @@
 from django import forms
 from morceaux.models import Style,Instrument
+from morceaux.fields import CustomModelMultipleChoiceField
+from datetime import date
+
 
 class EditerInstrument(forms.Form):
     nom = forms.CharField(
@@ -34,11 +37,11 @@ class EditerMorceau(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'class': 'form-control-sm','size':'8'}))
     
-    date_debut = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control-sm'}),initial=False,required=False)
-    date_fin = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control-sm'}),initial=False,required=False)
+    date_debut = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control-sm'}),initial=date.today().strftime('%Y-%m-%d'),required=False)
+    date_fin = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control-sm'}),initial=date.today().strftime('%Y-%m-%d'),required=False)
 
-    instrument = forms.ModelMultipleChoiceField(queryset=Instrument.objects.all(),required=False,widget=forms.SelectMultiple)
-    style = forms.ModelMultipleChoiceField(queryset=Style.objects.all(),required=False,widget=forms.SelectMultiple)
+    instrument = CustomModelMultipleChoiceField(queryset=Instrument.objects.all().order_by('nom'),required=False,widget=forms.SelectMultiple)
+    style = CustomModelMultipleChoiceField(queryset=Style.objects.all().order_by('nom'),required=False,widget=forms.SelectMultiple)
 
     locked = forms.BooleanField(initial=False,required=False)
     download = forms.BooleanField(label='Accept Download',initial=False,required=False)
@@ -49,19 +52,25 @@ class EditerMorceau(forms.Form):
 
     mixed = forms.BooleanField(initial=False,required=False)
     finished = forms.BooleanField(initial=False,required=False)
+    
+    documentation = forms.BooleanField(initial=False,required=False)
+    fichier_documentation = forms.CharField(initial=False,required=False)
+    support = forms.CharField(initial=False,required=False)
+
     hits=forms.IntegerField(initial=0,required=False)
 
     commentaire = forms.CharField(widget=forms.Textarea(attrs={"rows":"5",'cols':75}),required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #self.fields['music_file'].widget.clear_checkbox_label = 'clear'
-        #self.fields['music_file'].widget.initial_text = "Current value"
-        #self.fields['music_file'].widget.input_text = "Change"
-
-        #self.fields['image_file'].widget.clear_checkbox_label = 'clear'
-        #self.fields['image_file'].widget.initial_text = "Current value"
-        #self.fields['image_file'].widget.input_text = "Change"
+        self.fields['instrument'].queryset = Instrument.objects.all().order_by('nom')  # Trier par nom en ordre ASC
+        self.fields['style'].queryset = Style.objects.all().order_by('nom')  # Trier par nom en ordre ASC
+        self.fields['instrument'].required = False
+        self.fields['style'].required = False
+        self.fields['instrument'].choices = [('', '---')] + list(self.fields['instrument'].choices)
+        self.fields['style'].choices = [('', '---')] + list(self.fields['style'].choices)
+        self.initial['instrument'] = ['']  # Définir la valeur par défaut sur vide
+        self.initial['style'] = ['']  # Définir la valeur par défaut sur vide
 
 
 

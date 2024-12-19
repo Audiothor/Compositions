@@ -1,5 +1,5 @@
 display_website_name: ARTSEN
-musics_list_view: false
+musics_list_view: true
 musics_print_hits: true
 news_image_input_welcome: /static/images/simon.jpg
 news_print_creation_date: true

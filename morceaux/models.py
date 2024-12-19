@@ -47,8 +47,8 @@ class Morceau(models.Model):
     support=models.CharField(
         max_length=20,
         null=True, blank=True)
-    instrument=models.ManyToManyField(Instrument)
-    style=models.ManyToManyField(Style)
+    instrument=models.ManyToManyField(Instrument,blank=True)
+    style=models.ManyToManyField(Style,blank=True)
 
     download=models.BooleanField(default=True)
     player=models.BooleanField(default=True)

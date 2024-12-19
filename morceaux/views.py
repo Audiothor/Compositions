@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404,redirect
 from django.forms import modelform_factory
 from django.http import JsonResponse
+from django.urls import reverse
 
 from morceaux.models import Morceau,Instrument,Style
 from morceaux.forms import EditerMorceau,EditerInstrument,EditerStyle
@@ -215,20 +216,38 @@ def search_morceau(request):
     
 @login_required
 def morceau_nouveau(request):
-    Submitted=False
     if request.method == "POST":
-        form=MorceauForm(request.POST,request.FILES)
-        music_file = request.FILES['music_file']
-        nom=music_file.name
-        print(nom)
-        morceau = Morceau.objects.create(
-            nom=music_file.name,
-            music_file=music_file
-        )
-        return redirect('morceau_editer.html', morceau_id=morceau.id)
-    else:       
-        form=MorceauForm()
-        return render(request,template_name="morceaux/morceau_editer.html",context={"form": form,})
+        form = EditerMorceau(request.POST, request.FILES)
+        if form.is_valid():
+            # Créer une nouvelle instance de Morceau
+            morceau = Morceau(
+                nom=form.cleaned_data['nom'],
+                duree=form.cleaned_data['duree'],
+                date_debut=form.cleaned_data['date_debut'],
+                date_fin=form.cleaned_data['date_fin'],
+                commentaire=form.cleaned_data['commentaire'],
+                locked=form.cleaned_data['locked'],
+                finished=form.cleaned_data['finished'],
+                mixed=form.cleaned_data['mixed'],
+                documentation=form.cleaned_data['documentation'],
+                fichier_documentation=form.cleaned_data['fichier_documentation'],
+                hits=form.cleaned_data['hits'],
+                support=form.cleaned_data['support'],
+                download=form.cleaned_data['download'],
+                player=form.cleaned_data['player'],
+                music_file=form.cleaned_data['music_file'],
+                image_file=form.cleaned_data['image_file']
+            )
+            morceau.save()
+            # Ajouter les relations ManyToMany
+            morceau.instrument.set(form.cleaned_data['instrument'])
+            morceau.style.set(form.cleaned_data['style'])
+
+            #redirect(reverse('morceau_editer', kwargs={'id': morceau.id}))
+            return redirect("morceaux")
+    else:
+        form = EditerMorceau()
+    return render(request, "morceaux/morceau_editer.html", {"form": form})
 
 @login_required
 def morceau_upload(request):
@@ -306,7 +325,7 @@ def morceau_editer(request, id):
             morceau.download = form.cleaned_data['download']
             morceau.player = form.cleaned_data['player']
             morceau.commentaire = form.cleaned_data['commentaire']
-            morceau.hits = form.changed_data['hits']
+            #morceau.hits = form.changed_data['hits']
 
             morceau.instrument.set(form.cleaned_data['instrument'])
             morceau.style.set(form.cleaned_data['style'])
