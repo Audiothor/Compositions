@@ -1,4 +1,6 @@
-FROM python:3
+FROM python:3.12
+# Installer les dépendances nécessaires pour pyaudio
+RUN apt-get update && apt-get install -y portaudio19-dev python3-dev libffi-dev libssl-dev ffmpeg && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -21,7 +23,7 @@ RUN python3 -m pip install --upgrade pip
 RUN pip install django
 
 COPY requirements.txt /app/
-RUN pip install -no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 #Exposer le port sur lequel il va tourner
 EXPOSE 8000
