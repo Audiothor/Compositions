@@ -5,7 +5,7 @@
 {% block content %}
     </br>
     </br>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'morceau_editer' morceau.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table style="width:80%">
             <tr>

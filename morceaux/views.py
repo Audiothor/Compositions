@@ -273,9 +273,9 @@ def morceau_editer(request, id):
     ImageF=morceau.image_file
     MusicF=morceau.music_file
 
-    reqf=request.FILES
-    rfi=reqf.get('image_file')
-    rfm=reqf.get('music_file')
+    reqf = request.FILES
+    rfi = reqf.get('image_file')
+    rfm = reqf.get('music_file')
 
     mrf=request.POST.get("music_file-clear")
     irf=request.POST.get("image_file-clear")
@@ -294,18 +294,13 @@ def morceau_editer(request, id):
                     morceau.music_file=""
                     morceau.duree=""                 
                 else:
-                    # Correction ?
-                    morceau.music_file = ""
-                    morceau.duration = ""
-                    # print("ancienne value")
-                    # morceau.music_file = MusicF
-                    # duration = get_duration_pydub(morceau.music_file)
-                    # hours, mins, seconds = audio_duration_string(duration)
-                    # morceau.duree="%0.0f:%02d" % (mins,seconds)
-                    # Avant
-                    #morceau.music_file = MusicF
-                    #morceau.duree = form.cleaned_data['duree']
-
+                    if MusicF is not None:
+                        #print("ancienne value")
+                        morceau.music_file = MusicF
+                        morceau.duree = form.cleaned_data['duree']
+                    else:
+                        morceau.music_file = ""
+                        morceau.duree = ""
 
             if rfi is not None:
                 morceau.image_file = form.cleaned_data['image_file']
@@ -337,14 +332,23 @@ def morceau_editer(request, id):
             print(form.errors)
             return render(request,template_name="morceaux/morceau_editer.html",context={"form": form,"morceau": morceau,'ALERT_CLASS': 'alert-danger','ALERT_TYPE': 'ERROR','ALERT_MESSAGE': 'Error in the inputs. Please check the log !'})
     else:
+        instrument_ids = list(morceau.instrument.values_list('id', flat=True))
+        style_ids = list(morceau.style.values_list('id', flat=True))
+
+        # Définir la valeur par défaut '---' si les champs sont vides
+        if not instrument_ids:
+            instrument_ids = ['']
+        if not style_ids:
+            style_ids = ['']
+
         initial_data = {
             'nom': morceau.nom,
             'duree': morceau.duree,
             'date_debut': morceau.date_debut,
             'date_fin': morceau.date_fin,
             'locked':morceau.locked,
-            'instrument': morceau.instrument.all(),
-            'style': morceau.style.all(),
+            'instrument': instrument_ids,
+            'style': style_ids,
             'hits': morceau.hits,
             'mixed':morceau.mixed,
             'finished':morceau.finished,
