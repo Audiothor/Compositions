@@ -22,11 +22,11 @@
                             <table style="border-collapse: collapse; width: 100%;border='0'">
                                 <tr style="height: 18px;">
                                     <td style="width: 50%;"><b>Duration : </b>{{morceau.duree}}</td>
-                                    <td style="width: 50%;text-align: right;"><b>Start date : </b>{{morceau.date_debut | date:"d/m/Y"}}</td>
+                                    <td style="width: 50%;text-align: right;"><b>Start date : </b>{{morceau.date_debut | date:"Y-m"}}</td>
                                 </tr>
                                 <tr style="height: 12px;">
                                     <td style="width: 50%;">&nbsp</td>
-                                    <td style="width: 50%;text-align: right;"><b>End date : </b>{{morceau.date_fin | date:"d/m/Y"}}</td>
+                                    <td style="width: 50%;text-align: right;"><b>End date : </b>{{morceau.date_fin | date:"Y-m"}}</td>
                                 </tr>
                             </table>
                             <table style="border-collapse: collapse; width: 100%;border='0'">
@@ -136,7 +136,10 @@
         </td>
     </tr>
 </table>
+</br>
+</br>
 {% endblock %}
+
 <!--
     <a style="color: black" href="{% url 'morceau_editer' morceau.id %}">Edit</a>
     <a style="color: black" href="{% url 'morceau_supprimer' morceau.id %}">Delete</a>

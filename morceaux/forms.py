@@ -69,8 +69,9 @@ class EditerMorceau(forms.Form):
         self.fields['style'].required = False
         self.fields['instrument'].choices = [('', '---')] + list(self.fields['instrument'].choices)
         self.fields['style'].choices = [('', '---')] + list(self.fields['style'].choices)
-        self.initial['instrument'] = ['']  # Définir la valeur par défaut sur vide
-        self.initial['style'] = ['']  # Définir la valeur par défaut sur vide
+
+        #self.initial['instrument'] = ['']  # Définir la valeur par défaut sur vide
+        #self.initial['style'] = ['']  # Définir la valeur par défaut sur vide
 
 
 
