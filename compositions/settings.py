@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-0-=piv&g9-i4x=u(b_s$8%yt1_#z8cnq++!i49w-=)s0hbzbxp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')]
-
+#ALLOWED_HOSTS = [ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]
 
 # Application variables
-VERSION="v0.52.1"
+VERSION="v0.52.5"
 MEDIA_ROOT=BASE_DIR / 'media'
 MEDIA_URL="/media/"
 
