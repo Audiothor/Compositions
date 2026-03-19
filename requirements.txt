@@ -13,4 +13,4 @@ PyYAML==6.0.1
 setuptools==72.1.0
 soupsieve==2.5
 sqlparse==0.4.4
-wheel==0.34.2
+python-decouple==3.8
